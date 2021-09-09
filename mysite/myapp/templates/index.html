@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        {% if prev >= 0 %}
+        <a href="/{{ prev }}/">prev</a>
+        {% endif %}
+        <a href="/{{ next }}/">next</a>
+        <ul>
+        {% for o in some_list %}
+            <li>{{ o }}</li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>
