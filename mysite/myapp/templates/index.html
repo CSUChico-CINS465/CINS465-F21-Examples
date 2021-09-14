@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        {% if prev >= 0 %}
-        <a href="/{{ prev }}/">prev</a>
-        {% endif %}
-        <a href="/{{ next }}/">next</a>
-        <ul>
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+{% if prev >= 0 %}
+<a class="button" href="/{{ prev }}/">prev</a>
+{% else %}
+<a class="secondary button" href="">prev</a>
+{% endif %}
+<a class="button" href="/{{ next }}/">next</a>
+<div class="grid-container">
+    <div class="grid-x grid-padding-x">
         {% for o in some_list %}
-            <li>{{ o }}</li>
+        <div class="large-4 medium-6 small-12 cell">{{ o }}</div>
         {% endfor %}
-        </ul>
-    </body>
-</html>
+    </div>
+</div>
+{% endblock %}
