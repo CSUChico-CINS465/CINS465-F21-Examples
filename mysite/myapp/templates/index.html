@@ -10,5 +10,23 @@
         {% endfor %}
     </div>
 </div>
+<hr>
+<form action="/" method="post">
+    {% csrf_token %}
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+            <div class="large-4 medium-4 small-4 cell">
+                {{ form.suggestion_field.label }}:
+            </div>
+            <div class="large-4 medium-4 small-4 cell">
+                {{ form.suggestion_field }}
+            </div>
+            <div class="large-4 medium-4 small-4 cell">
+                {{ form.suggestion_field.errors }}
+            </div>
+            <div class="large-12 medium-12 small-12 cell">
+                <input type="submit" class="button" value="Submit">
+            </div>
+  </form>
 <a class="alert button" href="/dumb/">Delete Random</a>
 {% endblock %}
