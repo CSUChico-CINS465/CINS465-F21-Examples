@@ -9,16 +9,28 @@ from . import forms
 def index(request):
     if request.method == "POST":
         form = forms.SuggestionForm(request.POST)
-        if form.is_valid():
-            form.save()
+        if form.is_valid() and request.user.is_authenticated:
+            form.save(request)
             form = forms.SuggestionForm()
     else:
         form = forms.SuggestionForm()
-    some_list = models.SuggestionModel.objects.all()
+    suggestion_objects = models.SuggestionModel.objects.all()
+    suggestion_list = []
+    for sugg in suggestion_objects:
+        comment_objects = models.CommentModel.objects.filter(
+            suggestion=sugg
+            )
+        temp_sugg = {}
+        temp_sugg["suggestion"] = sugg.suggestion
+        temp_sugg["id"] = sugg.id
+        temp_sugg["author"] = sugg.author.username
+        temp_sugg["comments"] = comment_objects
+        suggestion_list += [temp_sugg]
+
     context = {
         "title": "CINS465",
         "body":"Hello World",
-        "some_list": some_list,
+        "suggestion_list": suggestion_list,
         "form": form
     }
     return render(request,"index.html", context=context)

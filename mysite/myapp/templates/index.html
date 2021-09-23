@@ -3,13 +3,19 @@
 {% block content %}
 <div class="grid-container">
     <div class="grid-x grid-padding-x">
-        {% for o in some_list %}
-        <div class="large-4 medium-6 small-12 cell">
-            {{ o.suggestion }}
+        {% for sugg in suggestion_list %}
+        <div class="large-12 medium-12 small-12 cell">
+            {{ sugg.suggestion }} - {{ sugg.author }}
+            <ul>
+                {% for comm in sugg.comments %}
+                <li> {{ comm.comment }} - {{ comm.author.username }}</li>
+                {% endfor %}
+            </ul>
         </div>
         {% endfor %}
     </div>
 </div>
+{% if request.user.is_authenticated %}
 <hr>
 <form action="/" method="post">
     {% csrf_token %}
@@ -28,5 +34,6 @@
                 <input type="submit" class="button" value="Submit">
             </div>
   </form>
-<a class="alert button" href="/dumb/">Delete Random</a>
+<a class="alert button" href="/useful/">Delete Random</a>
+{% endif %}
 {% endblock %}
