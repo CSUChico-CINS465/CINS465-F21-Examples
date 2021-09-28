@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth import logout
+
 import random
 
 from . import models
@@ -42,3 +44,22 @@ def delete_random(request):
     some_instance.delete()
     print(some_int)
     return redirect("/")
+
+def logout_view(request):
+    logout(request)
+    return redirect("/login/")
+
+def register_view(request):
+    if request.method == "POST":
+        form = forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save(request)
+            return redirect("/login/")
+    else:
+        form = forms.RegistrationForm()
+
+    context = {
+        "title": "Registration Page",
+         "form": form
+    }
+    return render(request,"registration/register.html", context=context)

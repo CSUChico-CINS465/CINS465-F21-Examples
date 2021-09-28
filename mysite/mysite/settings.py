@@ -92,7 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
-            'min_length': 16,
+            'min_length': 2,
         }
     },
     {
@@ -102,6 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
 
 
 # Internationalization

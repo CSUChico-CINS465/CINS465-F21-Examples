@@ -11,7 +11,27 @@
 </head>
 
 <body>
-    <p>Nav Bar</p>
+    <div class="top-bar">
+        <div class="top-bar-left">
+          <ul class="menu">
+            <li class="menu-text">Suggestion Site</li>
+            {% if request.user.is_authenticated %}
+            <li><a href="/logout/">Logout</a></li>
+            {% else %}
+            <li><a href="/login/">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="top-bar-right">
+          <ul class="menu">
+            {% if request.user.is_authenticated %}
+            <li>Hi {{ request.user.username }} </li>
+            {% else %}
+            <li>Welcome Guest</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
     {% block content %}
     {% endblock %}
     <script src="{% static 'js/vendor.js' %}"></script>
