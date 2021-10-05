@@ -1,6 +1,18 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
+
+<div id="list-rendering">
+    <ol>
+      <li v-for="todo in suggestions">
+        {% verbatim %}
+        {{ todo.suggestion }}
+        {% endverbatim %}
+      </li>
+    </ol>
+  </div>
 <div class="grid-container">
     <div class="grid-x grid-padding-x">
         {% for sugg in suggestion_list %}
@@ -36,4 +48,9 @@
   </form>
 <a class="alert button" href="/useful/">Delete Random</a>
 {% endif %}
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/myvue.js' %}"></script>
 {% endblock %}
