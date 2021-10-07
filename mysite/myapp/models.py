@@ -5,6 +5,7 @@ from django.contrib.auth.models import User as auth_user
 class SuggestionModel(models.Model):
     suggestion = models.CharField(max_length=240)
     author = models.ForeignKey(auth_user, on_delete=models.CASCADE)
+    published_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.author.username) + " " + str(self.suggestion)
@@ -16,6 +17,8 @@ class CommentModel(models.Model):
         SuggestionModel,
         on_delete=models.CASCADE
         )
+    published_on = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return str(self.author.username) + " " + str(self.comment)
