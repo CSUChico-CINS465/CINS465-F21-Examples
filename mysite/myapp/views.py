@@ -48,7 +48,7 @@ def suggestion_view(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
     if request.method == "POST":
-        form = forms.SuggestionForm(request.POST)
+        form = forms.SuggestionForm(request.POST, request.FILES)
         if form.is_valid() and request.user.is_authenticated:
             form.save(request)
             return redirect("/")
@@ -89,7 +89,7 @@ def register_view(request):
     return render(request,"registration/register.html", context=context)
 
 def suggestions_view(request):
-    suggestion_objects = models.SuggestionModel.objects.all()
+    suggestion_objects = models.SuggestionModel.objects.all().order_by("-published_on")
     suggestion_list = {}
     suggestion_list["suggestions"] = []
     for sugg in suggestion_objects:
@@ -101,6 +101,12 @@ def suggestions_view(request):
         temp_sugg["id"] = sugg.id
         temp_sugg["author"] = sugg.author.username
         temp_sugg["date"] = sugg.published_on.strftime("%Y-%m-%d")
+        if sugg.image:
+            temp_sugg["image"] = sugg.image.url
+            temp_sugg["image_desc"] = sugg.image_description
+        else:
+            temp_sugg["image"] = ""
+            temp_sugg["image_desc"] = ""
         temp_sugg["comments"] = []
         for comm in comment_objects:
             temp_comm = {}
@@ -116,7 +122,7 @@ def suggestions_view(request):
                 if time_diff_m < 60:
                     temp_comm["date"] = "published " + str(int(time_diff_m)) + " minutes ago"
                 else:
-                    time_diff_h = divmod(time_diff_h,60)[0]
+                    time_diff_h = divmod(time_diff_m,60)[0]
                     if time_diff_h < 24:
                         temp_comm["date"] = "published " + str(int(time_diff_h)) + " hours ago"
                     else:
