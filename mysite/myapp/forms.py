@@ -1,7 +1,4 @@
 from django import forms
-from django.contrib import auth
-from django.core import validators
-from django.core.validators import validate_unicode_slug
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User as auth_user
 
@@ -85,7 +82,7 @@ class RegistrationForm(UserCreationForm):
         )
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
+        user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
         if commit:
             user.save()
