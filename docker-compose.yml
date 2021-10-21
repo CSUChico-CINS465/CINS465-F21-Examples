@@ -7,17 +7,49 @@ services:
     build: .
     volumes:
        - .:/code
+    links:
+       - redis:redis
     expose:
        - 8000
     user: 1001:1002 ## needed for linux
-    command: python /code/mysite/manage.py runserver 0.0.0.0:8000
+    working_dir: /code/mysite
+   #  command: python manage.py runserver 0.0.0.0:8000
+    command: daphne -b 0.0.0.0 -p 8000 mysite.asgi:application
 
-  nginx:
-   restart: always
-   build: ./nginx/
+  redis:
+   image: redis:latest
+   expose:
+      - 6379
+
+#   nginx:
+#    restart: always
+#    build: ./nginx/
+#    volumes:
+#        - ./mysite/static/:/static
+#    depends_on:
+#       - web
+#    ports:
+#       - 80:80
+#       - 443:443
+#    links:
+#       - web:web
+
+  caddy:
+   image: caddy:latest
+   restart: unless-stopped
    depends_on:
-      - web
-   ports:
-      - 80:80
+     - web
    links:
-      - web:web
+     - web:web
+   ports:
+     - "80:80"
+     - "443:443"
+   volumes:
+     - $PWD/Caddyfile:/etc/caddy/Caddyfile
+     - $PWD/mysite/static:/srv/static/
+     - caddy_data:/data
+     - caddy_config:/config
+
+volumes:
+ caddy_data:
+ caddy_config:
