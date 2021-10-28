@@ -23,6 +23,15 @@ services:
    expose:
       - 6379
 
+  wasm:
+    build: ./wasm/
+    environment:
+       - USER=bryan
+    working_dir: /code/wasm-test/myproject/
+    # user: 1001:1002 ## needed for linux
+    volumes:
+      - .:/code
+
 #   nginx:
 #    restart: always
 #    build: ./nginx/
