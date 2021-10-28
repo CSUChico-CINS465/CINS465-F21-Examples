@@ -12,6 +12,8 @@ services:
     expose:
        - 8000
     user: 1001:1002 ## needed for linux
+    environment:
+       - GOOGLE_APPLICATION_CREDENTIALS=/code/mysite/cins465-cloudkey.json
     working_dir: /code/mysite
    #  command: python manage.py runserver 0.0.0.0:8000
     command: daphne -b 0.0.0.0 -p 8000 mysite.asgi:application
