@@ -48,7 +48,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/myvue.js' %}"></script>
 <script type="module">
-    import init, { greet, add } from '/wasm/js/myproject.js';
+    import init, { greet, add , run_app} from '/wasm/js/myproject.js';
     async function run(){
         await init();
         greet();
@@ -57,6 +57,7 @@
         console.log(`1 + 2 = ${result}`);
         if (result !== 3)
           throw new Error("wasm addition doesn't work!");
+        run_app();
     }
     run();
 </script>
