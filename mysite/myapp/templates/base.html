@@ -20,6 +20,7 @@
             <li><a href="/logout/">Logout</a></li>
             {% else %}
             <li><a href="/login/">Login</a></li>
+            <li><a href="{% url "social:begin" "google-oauth2" %}">Google Auth</a></li>
             {% endif %}
           </ul>
         </div>
